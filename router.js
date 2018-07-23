@@ -10,20 +10,20 @@ import bodyParser from "body-parser";
 
 
 import {
-    getCustomerDetails as getCustomerDetails,
-    insertCustomerDetails as insertCustomerDetails,
-    UpdateCustomerDetails as UpdateCustomerDetails,
-    DeleteData as DeleteData,
-    LoginUser as LoginUser,
+    // getCustomerDetails as getCustomerDetails,
+    // insertCustomerDetails as insertCustomerDetails,
+    // UpdateCustomerDetails as UpdateCustomerDetails,
+    // DeleteData as DeleteData,
+    // LoginUser as LoginUser,
     
 } from "./Api/Controller/ModelCustomer";
 
 import {
     SignUp as SignUp,
     verify as verify,
-    ShowData as ShowData,
-    DeleteEmployee as DeleteEmployee,
-    UpdateEmployee as UpdateEmployee
+    // ShowData as ShowData,
+    // DeleteEmployee as DeleteEmployee,
+    // UpdateEmployee as UpdateEmployee
 } from "./Api/Controller/LoginSignUp";
 
 import {
@@ -49,4 +49,5 @@ var server = app.listen(8080, "127.0.0.1", function () {
 
 app.post('/SignUp', SignUp);
 app.put('/verify',verify);
+
 
