@@ -21,6 +21,7 @@ import {
 import {
     SignUp as SignUp,
     verify as verify,
+    SignIn as SignIn
     // ShowData as ShowData,
     // DeleteEmployee as DeleteEmployee,
     // UpdateEmployee as UpdateEmployee
@@ -31,6 +32,10 @@ import {
 
 } from "./Api/Controller/ModelFunctions"; 
 
+
+import {
+    findAll as findAll
+} from "./Api/Controller/Student";
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -49,5 +54,7 @@ var server = app.listen(8080, "127.0.0.1", function () {
 
 app.post('/SignUp', SignUp);
 app.put('/verify',verify);
+app.post('/SignIn',SignIn);
+app.get('/findAll',findAll);
 
 
