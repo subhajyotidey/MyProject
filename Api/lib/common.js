@@ -1,8 +1,7 @@
-
-
+import lodash from "lodash";
 import nodemailer from "nodemailer";
 import request from "request";
-
+const Sequelize = require('sequelize');
 
 export async function sendEmail__(emailId, subject, message, attachments = {}) {
     let mailOptions = {};
@@ -35,4 +34,52 @@ export async function sendEmail__(emailId, subject, message, attachments = {}) {
         }
         return console.log("Mail Send");
     });
+}
+
+export async function getConnection(table, data) {
+
+    const Op = Sequelize.Op;
+    const SchoolDatabaseCredentials = {
+        host: 'localhost',
+        user: 'root',
+        password: '123',
+        database: data.split(",")[1]
+    }
+
+    console.log(table);
+
+    console.log(SchoolDatabaseCredentials.user);
+
+    var sequelize = new Sequelize(SchoolDatabaseCredentials.database, SchoolDatabaseCredentials.user, SchoolDatabaseCredentials.password, {
+            host: SchoolDatabaseCredentials.host,
+            port: 3306,
+            dialect: "mysql",
+            operatorsAliases: Op,
+            pool: {
+                max: 100,
+                min: 0,
+                idle: 10000
+            }
+        }
+    
+    ),
+
+    db = {};
+    var model;
+    table.forEach(function (element) {
+        model = sequelize.import(
+            "../../Api/Schema/" + element + ".schema.js"
+        );
+        db[model.name] = model;
+
+    });
+
+    console.log(model);
+    console.log(db);
+    return lodash.extend({
+            sequelize: sequelize
+        },
+        db
+    );
+
 }
