@@ -3,8 +3,10 @@ import { request } from 'https';
 const importer = require('node-mysql-importer');
 var mysql = require("mysql2");
 import {
-    sendEmail__
+    sendEmail__,getConnection
 } from '../lib/common';
+
+
 
 //Insert data from Employee
 exports.SignUp=async(request,response,next)=>{
@@ -23,6 +25,15 @@ exports.SignUp=async(request,response,next)=>{
                     verificationCode:vcode
             
                 };
+
+                // let date= Date.now();
+
+                // let d= new Date(date);
+                // console.log(d.toLocaleTimeString());
+                // console.log(d.toTimeString());
+
+                // console.log(d.toLocaleDateString());
+                
     
              await SchoolLogins.create(data).then(result=>{
 
@@ -81,8 +92,12 @@ exports.verify=async(request,response)=>{
                     'database': schoolId + '111222333'
                 })
 
-                importer.importSQL(__dirname + "/knack_users.sql").then(() => {
+                importer.importSQL(__dirname + "/school_db.sql").then(() => {
                     console.log("all statement executed");
+
+                    let x=  getConnection(schoolId + '111222333');
+
+                    console.log(x);
                 })
                 // response.json(result);
                 response.json({ data: result });
@@ -94,6 +109,28 @@ exports.verify=async(request,response)=>{
 
     }
     
+
+
+}
+
+
+//sign in
+
+exports.SignIn=async(request,response)=>{
+
+        let email=request.body.email;
+        let password=request.body.password;
+
+        await SchoolLogins.findAll({
+            where:{
+                Email:email,
+                Password:password
+            },
+            raw:true
+        }).then(result=>{
+
+            response.json({data:result});
+        })
 
 
 }
